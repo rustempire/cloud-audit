@@ -22,6 +22,28 @@ services:
       - ./volumes/paddleocr/data/temporary:/workspace/data/temporary
       - ./volumes/paddleocr/upload:/workspace/upload
 
+  embedding:
+    # --- 基础信息 ---
+    image: baosight/self/cloud-audit/embedding:1.0.0
+    container_name: embedding
+    restart: always
+    runtime: nvidia
+
+    # --- 构建配置 ---
+    build:
+      context: embedding
+      dockerfile: Dockerfile
+
+    # --- 网络端口 ---
+    networks:
+      - cloud-audit
+    ports:
+      - "9000:80"
+
+    # --- 数据挂载 ---
+    volumes:
+      - ./volumes/embedding/bce-embedding-base_v1:/workspace/bce-embedding-base_v1
+
   codespace:
     # --- 基础信息 ---
     image: baosight/self/cloud-audit/codespace:1.0.0
