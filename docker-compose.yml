@@ -1,0 +1,32 @@
+services:
+  codespace:
+    # --- 基础信息 ---
+    image: baosight/self/cloud-audit/codespace:1.0.0
+    container_name: codespace
+    restart: always
+
+    # --- 构建配置 ---
+    build:
+      context: codespace
+      dockerfile: Dockerfile
+
+    # --- 网络端口 ---
+    networks:
+      - cloud-audit
+    ports:
+      - "10000:80"
+
+    # --- 数据挂载 ---
+    volumes:
+      - ./volumes/codespace/instantclient_12_2:/opt/oracle/instantclient_12_2
+      - ./volumes/codespace/workspace:/workspace
+
+    # --- 环境变量 ---
+    environment:
+      - CODESPACE_HOST=${CODESPACE_HOST}
+      - CODESPACE_PORT=${CODESPACE_PORT}
+      - CODESPACE_BASE=${CODESPACE_BASE}
+
+networks:
+  cloud-audit:
+    driver: bridge
