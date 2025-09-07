@@ -1,4 +1,27 @@
 services:
+  paddleocr:
+    # --- 基础信息 ---
+    image: baosight/self/cloud-audit/paddleocr:1.0.0
+    container_name: paddleocr
+    restart: always
+
+    # --- 构建配置 ---
+    build:
+      context: paddleocr
+      dockerfile: Dockerfile
+
+    # --- 网络端口 ---
+    networks:
+      - cloud-audit
+    ports:
+      - "9999:80"
+
+    # --- 数据挂载 ---
+    volumes:
+      - ./volumes/paddleocr/logs:/workspace/logs
+      - ./volumes/paddleocr/data/temporary:/workspace/data/temporary
+      - ./volumes/paddleocr/upload:/workspace/upload
+
   codespace:
     # --- 基础信息 ---
     image: baosight/self/cloud-audit/codespace:1.0.0
