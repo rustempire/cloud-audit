@@ -44,6 +44,23 @@ services:
     volumes:
       - ./volumes/embedding/bce-embedding-base_v1:/workspace/bce-embedding-base_v1
 
+  microsoft:
+    # --- 基础信息 ---
+    image: baosight/self/cloud-audit/microsoft:1.0.0
+    container_name: microsoft
+    restart: always
+
+    # --- 构建配置 ---
+    build:
+      context: microsoft
+      dockerfile: Dockerfile
+
+    # --- 网络端口 ---
+    networks:
+      - cloud-audit
+    ports:
+      - "9001:80"
+
   codespace:
     # --- 基础信息 ---
     image: baosight/self/cloud-audit/codespace:1.0.0

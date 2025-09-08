@@ -1,16 +1,14 @@
 FROM ubuntu:22.04
 
+ENV PIP_NO_CACHE_DIR=off
+
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     libaio1 \
-    libnsl2 \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN ln -sf /usr/bin/python3 /usr/bin/python && \
-    ln -sf /usr/bin/pip3 /usr/bin/pip
-
-RUN pip install --no-cache-dir \
+    libnsl2 && \
+    rm -rf /var/lib/apt/lists/* && \
+    pip3 install \
     jupyter \
     jupyterlab-language-pack-zh-CN \
     pandas \
